@@ -1,5 +1,5 @@
 {
-  "name": "silver-octo-succotash-temp",
+  "name": "silver-octo-succotash",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.97.0",
+    "@supabase/supabase-js": "^2.0.0",
     "next": "14.2.35",
     "react": "^18",
     "react-dom": "^18"
-  },
+  }
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
