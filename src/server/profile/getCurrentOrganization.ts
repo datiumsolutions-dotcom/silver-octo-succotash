@@ -1,6 +1,6 @@
 import "server-only";
 
-import { createRlsServerSupabaseClient, getAuthenticatedUserId } from "@/server/supabase/rls";
+import { createRlsServerSupabaseClient } from "@/server/supabase/rls";
 
 export type CurrentOrganization = {
   id: string;
@@ -9,12 +9,7 @@ export type CurrentOrganization = {
 };
 
 export async function getCurrentOrganization(): Promise<CurrentOrganization | null> {
-  const userId = await getAuthenticatedUserId();
-  if (!userId) {
-    return null;
-  }
-
-  const rlsClient = createRlsServerSupabaseClient();
+  const rlsClient = await createRlsServerSupabaseClient();
   if (!rlsClient) {
     return null;
   }
@@ -22,7 +17,7 @@ export async function getCurrentOrganization(): Promise<CurrentOrganization | nu
   const { data: profile, error: profileError } = await rlsClient.supabase
     .from("profiles")
     .select("current_organization_id")
-    .eq("user_id", userId)
+    .eq("user_id", rlsClient.userId)
     .maybeSingle();
 
   if (profileError) {

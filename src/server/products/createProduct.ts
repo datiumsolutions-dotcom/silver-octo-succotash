@@ -33,7 +33,7 @@ export async function createProduct(input: CreateProductInput): Promise<void> {
   const description = input.description && input.description.trim().length > 0 ? input.description.trim() : null;
   const price = parsePrice(input.price);
 
-  const rlsClient = createRlsServerSupabaseClient();
+  const rlsClient = await createRlsServerSupabaseClient();
   if (!rlsClient) {
     throw new Error("Sesión inválida.");
   }

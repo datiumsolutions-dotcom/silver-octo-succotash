@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 
-import { clearAuthCookie } from "@/server/supabase/auth-server";
+import { createServerSupabaseClient } from "@/server/supabase/server";
 
-export default function LogoutPage() {
-  clearAuthCookie();
+export default async function LogoutPage() {
+  const supabase = await createServerSupabaseClient();
+  await supabase.auth.signOut();
   redirect("/login");
 }

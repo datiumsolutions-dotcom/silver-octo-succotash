@@ -2,8 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-import { createAnonSupabaseClient } from "@/server/supabase/rls";
-import { setAuthCookie } from "@/server/supabase/auth-server";
+import { createServerSupabaseClient } from "@/server/supabase/server";
 
 export async function registerAction(formData: FormData): Promise<void> {
   const email = formData.get("email");
@@ -22,7 +21,7 @@ export async function registerAction(formData: FormData): Promise<void> {
     redirect("/register?error=" + encodeURIComponent("La contraseña debe tener al menos 6 caracteres."));
   }
 
-  const supabase = createAnonSupabaseClient();
+  const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.auth.signUp({
     email: trimmedEmail,
     password,
@@ -36,6 +35,5 @@ export async function registerAction(formData: FormData): Promise<void> {
     redirect("/register?error=" + encodeURIComponent("No se pudo iniciar sesión. Intentá de nuevo."));
   }
 
-  setAuthCookie(data.session);
   redirect("/dashboard");
 }

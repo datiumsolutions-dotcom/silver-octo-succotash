@@ -18,7 +18,7 @@ export async function getProducts(): Promise<Product[]> {
     return [];
   }
 
-  const rlsClient = createRlsServerSupabaseClient();
+  const rlsClient = await createRlsServerSupabaseClient();
   if (!rlsClient) {
     return [];
   }
